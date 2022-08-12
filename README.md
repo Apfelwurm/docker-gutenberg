@@ -36,3 +36,4 @@ docker run -it --rm --net=host apfelwurm/docker-gutenberg
 * compose nginx revproxy
 * compose redis
 * compose postgres
+* compose gutenberg volumes

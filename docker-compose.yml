@@ -1,0 +1,61 @@
+version: '3'
+services:
+    gutenberg:
+        image: 'apfelwurm/docker-gutenberg:latest'
+        env_file: .env
+        environment:
+            DB_HDJANGO_SETTINGS_MODULEOST: '${DB_HDJANGO_SETTINGS_MODULEOST}'
+            POSTGRES_SERVER: '${DBServer}'
+            POSTGRES_PASSWORD: '${DBPassword}'
+            POSTGRES_USER: '${DBUser}'
+            POSTGRES_DB: '${DBName}'
+            POSTGRES_PORT: '${DBPort}'
+            REDIS_PORT: '${REDISPort}'
+            REDIS_SERVER: '${REDISServer}'
+            REDIS_PASSWORD: '${REDISPassword}'
+        networks:
+            - gutenberg
+        depends_on:
+            - gutenberg_psql
+    gutenberg_psql:
+        image: 'postgres:latest'
+        env_file: .env
+        environment:
+            POSTGRES_PASSWORD: '${DBPassword}'
+            POSTGRES_USER: '${DBUser}'
+            POSTGRES_DB: '${DBName}'
+            TZ: '${TZ}'
+        volumes:
+            - gutenberg_psql:/var/lib/postgresql/data
+        networks:
+            - gutenberg
+        healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U ${DBUser} -d ${DBName}"]
+          retries: 3
+          timeout: 5s
+    gutenberg_redis:
+        image: redis:latest
+        restart: always
+        command: redis-server --save 20 1 --loglevel warning --requirepass ${REDISPassword}
+        volumes:
+        - gutenberg_cache:/data
+    gutenberg_nginx-proxy:
+        image: jwilder/nginx-proxy
+        ports:
+        - "${APPPort}:80"
+        environment:
+            - VIRTUAL_HOST=*
+        volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+
+
+networks:
+  gutenberg:
+        driver: bridge
+volumes:
+  gutenberg_psql:
+        driver: local
+  gutenberg_storage:
+        driver: local
+  gutenberg_cache:
+        driver: local
