@@ -1,0 +1,51 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Docker Image",
+            "type": "shell",
+            "command": "docker pull lacledeslan/gamesvr-dods; docker build . --rm -f linux.Dockerfile -t apfelwurm/docker-gutenberg --no-cache --build-arg BUILDNODE=$env:computername;",
+            "dependsOn": "Download git submodules",
+            "group": "build",
+            "problemMatcher": [],
+            "promptOnClose": true
+        },
+        {
+            "label": "Build & Execute Self Tests",
+            "type": "shell",
+            "command": "docker run -it --rm apfelwurm/docker-gutenberg ./ll-tests/dods-competitive.sh;",
+            "dependsOn": "Build Docker Image",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "promptOnClose": true
+        },
+        {
+            "label": "Build & Run Interactive Server",
+            "type": "shell",
+            "linux" :{
+                "command": "docker run -it -p 27015:27015/tcp -p 27015:27015/udp apfelwurm/docker-gutenberg ./srcds_run -game dod +map dod_avalanche +sv_lan 1 +usercon +rcon_password \"test123\";",
+            },
+            "windows": {
+                "command": "$IP=((Get-WmiObject -Class Win32_NetworkAdapterConfiguration | where {$_.DefaultIPGateway -ne $null}).IPAddress | select-object -first 1); docker run -it -p ${IP}:27015:27015/udp -p ${IP}:27015:27015/tcp Apfelwurm/docker-gutenberg ./srcds_run -game dod +map dod_avalanche +sv_lan 1 +usercon +rcon_password \"test123\";"
+            },
+            "dependsOn": "Build Docker Image",
+            "group": "build",
+            "problemMatcher": [],
+            "promptOnClose": true
+        },
+        {
+            "label": "Build & Shell In",
+            "type": "shell",
+            "command": "docker run -it -p 27015:27015/tcp -p 27015:27015/udp --rm apfelwurm/docker-gutenberg;",
+            "dependsOn": "Build Docker Image",
+            "group": "build",
+            "problemMatcher": [],
+            "promptOnClose": true
+        }
+    ]
+}
