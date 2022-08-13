@@ -77,7 +77,7 @@ RUN ln -s /app/gutenberg/dist /app/gutenberg/static
 RUN ln -s /app/gutenberg/gutenberg/venv/lib/python3.9/site-packages/django/contrib/admin/static/admin /app/gutenberg/dist/admin
 
 WORKDIR /app
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /app/wait
 RUN chmod +x /app/wait
 WORKDIR /app/gutenberg/
 # ONBUILD USER root
