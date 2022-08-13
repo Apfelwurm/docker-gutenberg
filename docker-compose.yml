@@ -20,8 +20,8 @@ services:
         networks:
             - gutenberg
         volumes:
-            - gutenberg_storage/prints:/prints
-            - gutenberg_storage/setup:/setup
+            - gutenberg_storage_prints:/prints
+            - gutenberg_storage_setup:/setup
         # ports:
         #     - "${APPPort}:8081"
         depends_on:
@@ -57,7 +57,9 @@ networks:
 volumes:
   gutenberg_psql:
         driver: local
-  gutenberg_storage:
+  gutenberg_storage_prints:
+        driver: local
+  gutenberg_storage_setup:
         driver: local
   gutenberg_cache:
         driver: local
