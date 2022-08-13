@@ -64,5 +64,4 @@ RUN pip3 install uwsgi
 # ONBUILD USER root
 
 EXPOSE 11111
-USER root
 CMD [ "/app/gutenberg/runscript.sh" ]
