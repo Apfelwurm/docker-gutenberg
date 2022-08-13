@@ -20,6 +20,7 @@ services:
             WAIT_HOSTS: 'gutenberg_psql:5432'
         networks:
             - gutenberg
+        restart: always
         volumes:
             - gutenberg_storage_prints:/prints
             - gutenberg_storage_setup:/setup
@@ -39,6 +40,7 @@ services:
             - gutenberg_psql:/var/lib/postgresql/data
         networks:
             - gutenberg
+        restart: always
         healthcheck:
           test: ["CMD-SHELL", "pg_isready -U ${DBUser} -d ${DBName}"]
           retries: 3
