@@ -16,7 +16,7 @@ services:
             REDIS_SERVER: '${REDISServer}'
             REDIS_PASSWORD: '${REDISPassword}'
             GUTENBERG_SECRETKEY: '${GUTENBERGSecretKey}'
-            SERVER_VHOST: '${SERVER_VHOST}'
+            SERVER_VHOST: '${SERVERVhost}'
         networks:
             - gutenberg
         # ports:
