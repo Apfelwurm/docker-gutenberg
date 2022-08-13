@@ -53,14 +53,13 @@ WORKDIR /prints
 RUN chown -R gutenberg:gutenberg /prints
 
 USER gutenberg
-WORKDIR /app/gutenberg/gutenberg
-RUN python3 -m venv venv
+RUN python3 -m venv /app/gutenberg/gutenberg/venv
 USER root
-RUN chmod +x ./venv/bin/*
+RUN chmod +x /app/gutenberg/gutenberg/venv/bin/*
 WORKDIR /app/gutenberg/gutenberg
 USER gutenberg
-RUN ./gutenberg/venv/bin/pip3 install -r requirements.txt
-RUN ./gutenberg/venv/bin/pip3 install uwsgi
+RUN /app/gutenberg/gutenberg/venv/bin/pip3 install -r requirements.txt
+RUN /app/gutenberg/gutenberg/venv/bin/pip3 install uwsgi
 
 # ONBUILD USER root
 
