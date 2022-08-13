@@ -10,5 +10,6 @@ sed -i "s|%%REDIS_SERVER%%|$REDIS_SERVER|g" /app/gutenberg/gutenberg/settings/pr
 sed -i "s|%%REDIS_PASSWORD%%|$REDIS_PASSWORD|g" /app/gutenberg/gutenberg/settings/production_settings.py
 sed -i "s|%%GUTENBERG_SECRETKEY%%|$GUTENBERG_SECRETKEY|g" /app/gutenberg/gutenberg/settings/production_settings.py
 sed -i "s|%%DJANGO_SETTINGS_MODULE%%|$DJANGO_SETTINGS_MODULE|g" /app/gutenberg/gutenberg.ini
+sed -i "s|%%SERVER_VHOST%%|$SERVER_VHOST|g" /etc/nginx/sites-enabled/default
 
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
