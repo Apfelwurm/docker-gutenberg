@@ -56,10 +56,9 @@ USER gutenberg
 
 WORKDIR /app/gutenberg
 RUN python3 -m venv venv
-RUN chmod +x ./venv/bin/activate
-RUN ./venv/bin/activate
-RUN pip3 install -r requirements.txt
-RUN pip3 install uwsgi
+RUN chmod +x ./venv/bin/*
+RUN /venv/bin/pip3 install -r requirements.txt
+RUN /venv/bin/pip3 install uwsgi
 
 # ONBUILD USER root
 
