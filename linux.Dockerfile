@@ -56,7 +56,7 @@ USER gutenberg
 RUN python3 -m venv /app/gutenberg/gutenberg/venv
 USER root
 RUN chmod +x /app/gutenberg/gutenberg/venv/bin/*
-WORKDIR /app/gutenberg/gutenberg
+WORKDIR /app/gutenberg/
 USER gutenberg
 RUN /app/gutenberg/gutenberg/venv/bin/pip3 install -r requirements.txt
 RUN /app/gutenberg/gutenberg/venv/bin/pip3 install uwsgi
