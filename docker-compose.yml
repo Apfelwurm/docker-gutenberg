@@ -49,6 +49,9 @@ services:
         - "${APPPort}:80"
         volumes:
         - /var/run/docker.sock:/tmp/docker.sock:ro
+        depends_on:
+            - gutenberg
+
 
 
 networks:
