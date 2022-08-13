@@ -74,6 +74,7 @@ RUN /app/gutenberg/gutenberg/venv/bin/pip3 install psycopg2
 
 USER root
 RUN ln -s /app/gutenberg/dist /app/gutenberg/static
+RUN ln -s /app/gutenberg/gutenberg/venv/lib/python3.9/site-packages/django/contrib/admin/static/admin /app/gutenberg/dist/admin
 # ONBUILD USER root
 
 CMD [ "/app/gutenberg/runscript.sh" ]
