@@ -55,7 +55,7 @@ RUN chown -R gutenberg:gutenberg /prints
 USER gutenberg
 
 WORKDIR /app/gutenberg
-RUN virtualenv -p python3 venv
+RUN python-m venv -p python3 venv
 RUN source venv/bin/activate
 RUN pip3 install -r requirements.txt
 RUN pip3 install uwsgi
