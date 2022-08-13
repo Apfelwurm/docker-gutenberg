@@ -3,8 +3,8 @@ services:
     gutenberg:
         image: 'apfelwurm/docker-gutenberg:latest'
         env_file: .env
-        expose:
-            - "8081"
+        ports:
+        - "${APPPort}:80"
         environment:
             DB_HDJANGO_SETTINGS_MODULEOST: '${DB_HDJANGO_SETTINGS_MODULEOST}'
             POSTGRES_SERVER: '${DBServer}'
@@ -16,9 +16,6 @@ services:
             REDIS_SERVER: '${REDISServer}'
             REDIS_PASSWORD: '${REDISPassword}'
             GUTENBERG_SECRETKEY: '${GUTENBERGSecretKey}'
-            VIRTUAL_HOST: "drucken.ams"
-            VIRTUAL_PROTO: 'uwsgi'
-            VIRTUAL_PORT: 8081
         networks:
             - gutenberg
         # ports:
@@ -49,18 +46,6 @@ services:
         - gutenberg_cache:/data
         networks:
             - gutenberg
-    gutenberg_nginx-proxy:
-        image: nginxproxy/nginx-proxy
-        ports:
-        - "${APPPort}:80"
-        volumes:
-        - /var/run/docker.sock:/tmp/docker.sock:ro
-        depends_on:
-            - gutenberg
-        networks:
-            - gutenberg
-
-
 
 networks:
   gutenberg:
