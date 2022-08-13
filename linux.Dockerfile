@@ -54,6 +54,7 @@ WORKDIR /var/log/nginx
 WORKDIR /var/lib/nginx
 WORKDIR /var/lib/nginx/body
 WORKDIR /var/lib/nginx/fastcgi
+WORKDIR /var/lib/nginx/proxy
 
 RUN chown -R gutenberg:gutenberg /prints
 RUN chown -R gutenberg:gutenberg /var/log/gutenberg
