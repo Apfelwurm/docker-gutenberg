@@ -49,7 +49,7 @@ COPY /dist/linux/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /app/ll-tests/*.sh; chmod +x /app/gutenberg/runscript.sh;
 
 WORKDIR /prints
-# WORKDIR /var/log/gutenberg
+WORKDIR /var/log/gutenberg
 # WORKDIR /var/log/nginx
 # WORKDIR /var/lib/nginx
 # WORKDIR /var/lib/nginx/body
