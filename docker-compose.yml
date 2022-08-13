@@ -14,7 +14,7 @@ services:
             REDIS_SERVER: '${REDISServer}'
             REDIS_PASSWORD: '${REDISPassword}'
             GUTENBERG_SECRETKEY: '${GUTENBERGSecretKey}'
-            VIRTUAL_HOST: '*'
+            VIRTUAL_HOST: "*"
             VIRTUAL_PROTO: 'uwsgi'
         networks:
             - gutenberg
