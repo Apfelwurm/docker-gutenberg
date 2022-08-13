@@ -55,9 +55,9 @@ RUN chown -R gutenberg:gutenberg /prints
 USER gutenberg
 
 WORKDIR /app/gutenberg
-# RUN python3 -m venv venv
-# RUN chmod +x ./venv/bin/activate
-# RUN ./venv/bin/activate
+RUN python3 -m venv venv
+RUN chmod +x ./venv/bin/activate
+RUN ./venv/bin/activate
 RUN pip3 install -r requirements.txt
 RUN pip3 install uwsgi
 
