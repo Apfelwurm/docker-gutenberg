@@ -17,7 +17,7 @@ chown -R gutenberg:gutenberg /prints
 
 if [ ! -f /setup/initialfinished ]
 then
-    python3 /app/gutenberg/gutenberg/manage.py createsuperuser
+    python3 /app/gutenberg/manage.py createsuperuser
     touch /setup/initialfinished
 else
     echo "File found"
