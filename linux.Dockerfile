@@ -51,6 +51,9 @@ RUN chmod +x /app/ll-tests/*.sh; chmod +x /app/gutenberg/runscript.sh;
 WORKDIR /prints
 WORKDIR /var/log/gutenberg
 WORKDIR /var/log/nginx
+WORKDIR /var/lib/nginx
+WORKDIR /var/lib/nginx/body
+WORKDIR /var/lib/nginx/fastcgi
 
 RUN chown -R gutenberg:gutenberg /prints
 RUN chown -R gutenberg:gutenberg /var/log/gutenberg
