@@ -49,18 +49,18 @@ COPY /dist/linux/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /app/ll-tests/*.sh; chmod +x /app/gutenberg/runscript.sh;
 
 WORKDIR /prints
-WORKDIR /var/log/gutenberg
-WORKDIR /var/log/nginx
-WORKDIR /var/lib/nginx
-WORKDIR /var/lib/nginx/body
-WORKDIR /var/lib/nginx/fastcgi
-WORKDIR /var/lib/nginx/proxy
-WORKDIR /var/lib/nginx/uwsgi
-WORKDIR /var/lib/nginx/scgi
+# WORKDIR /var/log/gutenberg
+# WORKDIR /var/log/nginx
+# WORKDIR /var/lib/nginx
+# WORKDIR /var/lib/nginx/body
+# WORKDIR /var/lib/nginx/fastcgi
+# WORKDIR /var/lib/nginx/proxy
+# WORKDIR /var/lib/nginx/uwsgi
+# WORKDIR /var/lib/nginx/scgi
 
 RUN chown -R gutenberg:gutenberg /prints
 RUN chown -R gutenberg:gutenberg /var/log/gutenberg
-RUN chown -R gutenberg:gutenberg /var/log/nginx
+# RUN chown -R gutenberg:gutenberg /var/log/nginx
 
 USER gutenberg
 RUN python3 -m venv /app/gutenberg/gutenberg/venv
@@ -71,6 +71,7 @@ USER gutenberg
 RUN /app/gutenberg/gutenberg/venv/bin/pip3 install -r requirements.txt
 RUN /app/gutenberg/gutenberg/venv/bin/pip3 install psycopg2
 
+USER root
 # ONBUILD USER root
 
 CMD [ "/app/gutenberg/runscript.sh" ]
