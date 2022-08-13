@@ -17,7 +17,8 @@ chown -R gutenberg:gutenberg /prints
 
 if [ ! -f /setup/initialfinished ]
 then
-    python3 /app/gutenberg/manage.py createsuperuser
+    su gutenberg -c '/app/gutenberg/gutenberg/venv/bin/python3 manage.py migrate'
+    su gutenberg -c '/app/gutenberg/gutenberg/venv/bin/python3 manage.py createsuperuser'
     touch /setup/initialfinished
 else
     echo "File found"
