@@ -22,7 +22,7 @@ FROM debian:11
 HEALTHCHECK NONE
 ARG BUILDNODE=unspecified
 ARG SOURCE_COMMIT=unspecified
-ENV DJANGO_SETTINGS_MODULE=gutenberg.settings.local_settings
+ENV DJANGO_SETTINGS_MODULE=gutenberg.settings.production_settings
 
 LABEL com.lacledeslan.build-node=$BUILDNODE `
       org.label-schema.schema-version="1.0" `
