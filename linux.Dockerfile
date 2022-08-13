@@ -61,7 +61,7 @@ RUN chmod +x /app/gutenberg/gutenberg/venv/bin/*
 WORKDIR /app/gutenberg/
 USER gutenberg
 RUN /app/gutenberg/gutenberg/venv/bin/pip3 install -r requirements.txt
-RUN /app/gutenberg/gutenberg/venv/bin/pip3 install uwsgi
+RUN /app/gutenberg/gutenberg/venv/bin/pip3 install psycopg2
 
 # ONBUILD USER root
 
