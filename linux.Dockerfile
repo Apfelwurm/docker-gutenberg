@@ -50,9 +50,11 @@ RUN chmod +x /app/ll-tests/*.sh; chmod +x /app/gutenberg/runscript.sh;
 
 WORKDIR /prints
 WORKDIR /var/log/gutenberg
+WORKDIR /var/log/nginx
 
 RUN chown -R gutenberg:gutenberg /prints
 RUN chown -R gutenberg:gutenberg /var/log/gutenberg
+RUN chown -R gutenberg:gutenberg /var/log/nginx
 
 USER gutenberg
 RUN python3 -m venv /app/gutenberg/gutenberg/venv
