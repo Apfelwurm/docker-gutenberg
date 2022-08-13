@@ -55,6 +55,7 @@ WORKDIR /var/lib/nginx
 WORKDIR /var/lib/nginx/body
 WORKDIR /var/lib/nginx/fastcgi
 WORKDIR /var/lib/nginx/proxy
+WORKDIR /var/lib/nginx/uwsgi
 
 RUN chown -R gutenberg:gutenberg /prints
 RUN chown -R gutenberg:gutenberg /var/log/gutenberg
@@ -71,5 +72,4 @@ RUN /app/gutenberg/gutenberg/venv/bin/pip3 install psycopg2
 
 # ONBUILD USER root
 
-EXPOSE 11111
 CMD [ "/app/gutenberg/runscript.sh" ]
