@@ -14,6 +14,7 @@ sed -i "s|%%SERVER_VHOST%%|$SERVER_VHOST|g" /etc/nginx/sites-enabled/default
 
 chown -R gutenberg:gutenberg /prints
 
+/app/wait
 
 if [ ! -f /setup/initialfinished ]
 then

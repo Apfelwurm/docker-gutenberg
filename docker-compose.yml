@@ -17,6 +17,7 @@ services:
             REDIS_PASSWORD: '${REDISPassword}'
             GUTENBERG_SECRETKEY: '${GUTENBERGSecretKey}'
             SERVER_VHOST: '${SERVERVhost}'
+            WAIT_HOSTS: 'gutenberg_psql:5432'
         networks:
             - gutenberg
         volumes:

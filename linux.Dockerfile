@@ -75,6 +75,11 @@ RUN /app/gutenberg/gutenberg/venv/bin/pip3 install psycopg2
 USER root
 RUN ln -s /app/gutenberg/dist /app/gutenberg/static
 RUN ln -s /app/gutenberg/gutenberg/venv/lib/python3.9/site-packages/django/contrib/admin/static/admin /app/gutenberg/dist/admin
+
+WORKDIR /app
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+RUN chmod +x /app/wait
+WORKDIR /app/gutenberg/
 # ONBUILD USER root
 
 CMD [ "/app/gutenberg/runscript.sh" ]
