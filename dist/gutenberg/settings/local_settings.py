@@ -1,7 +1,7 @@
 from .base import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n7+3u12_59wy_kzvecb^w^jrpi(m#(gl8^qe92kvclkd9!=-h)'
+SECRET_KEY = '%%GUTENBERG_SECRETKEY%%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -32,7 +32,7 @@ DATABASES = {
 # )
 
 # Celery
-CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'redis://arbitrary_usrname:%%REDIS_PASSWORD%%@%%REDIS_SERVER%%:%%REDIS_PORT%%'
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

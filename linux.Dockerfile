@@ -34,7 +34,7 @@ LABEL com.lacledeslan.build-node=$BUILDNODE `
 
 
 RUN apt-get update && apt-get install -y `
-    cups printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds imagemagick libmagic-dev  unoconv ghostscript bubblewrap pdftk python3 python3-pip &&`
+    supervisor cups printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds imagemagick libmagic-dev  unoconv ghostscript bubblewrap pdftk python3 python3-pip &&`
     apt-get clean &&`
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
@@ -44,13 +44,21 @@ COPY --chown=gutenberg:gutenberg --from=builder /dl/gutenberg /app/gutenberg
 
 COPY --chown=gutenberg:gutenberg /dist/linux/ll-tests /app/ll-tests
 COPY --chown=gutenberg:gutenberg /dist/gutenberg/runscript.sh /app/gutenberg/runscript.sh
-
+COPY --chown=gutenberg:gutenberg /dist/gutenberg/gutenberg.ini /app/gutenberg/gutenberg.ini
+COPY /dist/linux/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /app/ll-tests/*.sh; chmod +x /app/gutenberg/runscript.sh;
+
+WORKDIR /prints
+
+RUN chown -R gutenberg:gutenberg /prints
 
 USER gutenberg
 
 WORKDIR /app/gutenberg
-RUN pip install -r requirements.txt
+RUN virtualenv -p python3 venv
+RUN source venv/bin/activate
+RUN pip3 install -r requirements.txt
+RUN pip3 install uwsgi
 
 # ONBUILD USER root
 

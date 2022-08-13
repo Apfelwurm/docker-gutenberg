@@ -1,7 +1,7 @@
 from .base import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = '%%GUTENBERG_SECRETKEY%%'
 
 ALLOWED_HOSTS = []
 
@@ -15,11 +15,11 @@ ADMINS = []
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gutenberg',
-        'USER': 'gutenberg',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': '%%POSTGRES_DB%%',
+        'USER': '%%POSTGRES_USER%%',
+        'PASSWORD': '%%POSTGRES_PASSWORD%%',
+        'HOST': '%%POSTGRES_SERVER%%',
+        'PORT': '%%POSTGRES_PORT%%',
     }
 }
 
@@ -29,7 +29,7 @@ LOGGING['handlers']['django_file']['filename'] = '/var/log/gutenberg/django.log'
 
 # Printing
 # Directory to store the printed files in
-MEDIA_ROOT = '/srv/printing/'
+MEDIA_ROOT = '/prints/'
 
 # Uncomment lines below to enable Open ID Connect auth
 # LOGIN_URL = 'oidc_authentication_init'
@@ -48,7 +48,7 @@ MEDIA_ROOT = '/srv/printing/'
 # )
 
 # Celery
-CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'redis://arbitrary_usrname:%%REDIS_PASSWORD%%@%%REDIS_SERVER%%:%%REDIS_PORT%%'
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

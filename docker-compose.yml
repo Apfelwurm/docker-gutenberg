@@ -13,6 +13,7 @@ services:
             REDIS_PORT: '${REDISPort}'
             REDIS_SERVER: '${REDISServer}'
             REDIS_PASSWORD: '${REDISPassword}'
+            GUTENBERG_SECRETKEY: '${GUTENBERGSecretKey}'
         networks:
             - gutenberg
         depends_on:
@@ -24,7 +25,6 @@ services:
             POSTGRES_PASSWORD: '${DBPassword}'
             POSTGRES_USER: '${DBUser}'
             POSTGRES_DB: '${DBName}'
-            TZ: '${TZ}'
         volumes:
             - gutenberg_psql:/var/lib/postgresql/data
         networks:
