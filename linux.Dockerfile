@@ -73,6 +73,7 @@ RUN /app/gutenberg/gutenberg/venv/bin/pip3 install -r requirements.txt
 RUN /app/gutenberg/gutenberg/venv/bin/pip3 install psycopg2
 
 USER root
+RUN ln -s /app/gutenberg/dist /app/gutenberg/static
 # ONBUILD USER root
 
 CMD [ "/app/gutenberg/runscript.sh" ]
