@@ -17,8 +17,10 @@ chown -R gutenberg:gutenberg /prints
 
 if [ ! -f /setup/initialfinished ]
 then
+    export DJANGO_SUPERUSER_USERNAME=admin
+    export DJANGO_SUPERUSER_PASSWORD=admin
     su gutenberg -c '/app/gutenberg/gutenberg/venv/bin/python3 manage.py migrate'
-    su gutenberg -c '/app/gutenberg/gutenberg/venv/bin/python3 manage.py createsuperuser'
+    su gutenberg -c '/app/gutenberg/gutenberg/venv/bin/python3 manage.py createsuperuser --noinput'
     touch /setup/initialfinished
 else
     echo "File found"
