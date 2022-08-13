@@ -30,10 +30,6 @@ docker run -it --rm --net=host apfelwurm/docker-gutenberg
 
 * python3 manage.py createsuperuser
 * implement tests
-* production / local swap
 * docker-compose
 * celery worker
-* compose nginx revproxy
 * compose redis
-* compose postgres
-* compose gutenberg volumes
