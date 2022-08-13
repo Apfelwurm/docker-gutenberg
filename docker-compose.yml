@@ -14,10 +14,12 @@ services:
             REDIS_SERVER: '${REDISServer}'
             REDIS_PASSWORD: '${REDISPassword}'
             GUTENBERG_SECRETKEY: '${GUTENBERGSecretKey}'
+            VIRTUAL_HOST: '*'
+            VIRTUAL_PROTO: 'uwsgi'
         networks:
             - gutenberg
-        ports:
-            - "${APPPort}:8081"
+        # ports:
+        #     - "${APPPort}:8081"
         depends_on:
             - gutenberg_psql
     gutenberg_psql:
@@ -41,14 +43,12 @@ services:
         command: redis-server --save 20 1 --loglevel warning --requirepass ${REDISPassword}
         volumes:
         - gutenberg_cache:/data
-    # gutenberg_nginx-proxy:
-    #     image: jwilder/nginx-proxy
-    #     ports:
-    #     - "${APPPort}:80"
-    #     environment:
-    #         - VIRTUAL_HOST=*
-    #     volumes:
-    #     - /var/run/docker.sock:/tmp/docker.sock:ro
+    gutenberg_nginx-proxy:
+        image: jwilder/nginx-proxy
+        ports:
+        - "${APPPort}:80"
+        volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
 
 
 networks:
