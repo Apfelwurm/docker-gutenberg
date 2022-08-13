@@ -53,7 +53,7 @@ WORKDIR /prints
 RUN chown -R gutenberg:gutenberg /prints
 
 USER gutenberg
-WORKDIR /app/gutenberg
+WORKDIR /app/gutenberg/gutenberg
 RUN python3 -m venv venv
 USER root
 RUN chmod +x ./venv/bin/*
