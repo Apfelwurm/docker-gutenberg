@@ -58,8 +58,8 @@ RUN python3 -m venv venv
 USER root
 RUN chmod +x ./venv/bin/*
 USER gutenberg
-RUN /venv/bin/pip3 install -r requirements.txt
-RUN /venv/bin/pip3 install uwsgi
+RUN ./venv/bin/pip3 install -r requirements.txt
+RUN ./venv/bin/pip3 install uwsgi
 
 # ONBUILD USER root
 
