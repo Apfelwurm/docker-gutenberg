@@ -5,7 +5,7 @@ SECRET_KEY = '%%GUTENBERG_SECRETKEY%%'
 
 ALLOWED_HOSTS = []
 
-STATIC_ROOT = '/var/www/gutenberg/static'
+# STATIC_ROOT = '/var/www/gutenberg/static'
 
 # Admin e-mail addresses to send messages to when errors occur
 ADMINS = []
