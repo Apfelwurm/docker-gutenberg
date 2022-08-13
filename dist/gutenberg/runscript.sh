@@ -12,4 +12,15 @@ sed -i "s|%%GUTENBERG_SECRETKEY%%|$GUTENBERG_SECRETKEY|g" /app/gutenberg/gutenbe
 sed -i "s|%%DJANGO_SETTINGS_MODULE%%|$DJANGO_SETTINGS_MODULE|g" /app/gutenberg/gutenberg.ini
 sed -i "s|%%SERVER_VHOST%%|$SERVER_VHOST|g" /etc/nginx/sites-enabled/default
 
+chown -R gutenberg:gutenberg /prints
+
+
+if [ ! -f /setup/initialfinished ]
+then
+    python3 /app/gutenberg/gutenberg/manage.py createsuperuser
+    touch /setup/initialfinished
+else
+    echo "File found"
+fi
+
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

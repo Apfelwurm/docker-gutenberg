@@ -19,6 +19,9 @@ services:
             SERVER_VHOST: '${SERVERVhost}'
         networks:
             - gutenberg
+        volumes:
+            - gutenberg_storage/prints:/prints
+            - gutenberg_storage/setup:/setup
         # ports:
         #     - "${APPPort}:8081"
         depends_on:
