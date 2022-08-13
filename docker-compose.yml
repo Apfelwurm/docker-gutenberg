@@ -3,6 +3,8 @@ services:
     gutenberg:
         image: 'apfelwurm/docker-gutenberg:latest'
         env_file: .env
+        expose:
+            - "8081"
         environment:
             DB_HDJANGO_SETTINGS_MODULEOST: '${DB_HDJANGO_SETTINGS_MODULEOST}'
             POSTGRES_SERVER: '${DBServer}'
@@ -16,12 +18,14 @@ services:
             GUTENBERG_SECRETKEY: '${GUTENBERGSecretKey}'
             VIRTUAL_HOST: "drucken.ams"
             VIRTUAL_PROTO: 'uwsgi'
+            VIRTUAL_PORT: 8081
         networks:
             - gutenberg
         # ports:
         #     - "${APPPort}:8081"
         depends_on:
             - gutenberg_psql
+            - gutenberg_redis
     gutenberg_psql:
         image: 'postgres:latest'
         env_file: .env
@@ -43,13 +47,17 @@ services:
         command: redis-server --save 20 1 --loglevel warning --requirepass ${REDISPassword}
         volumes:
         - gutenberg_cache:/data
+        networks:
+            - gutenberg
     gutenberg_nginx-proxy:
-        image: jwilder/nginx-proxy
+        image: nginxproxy/nginx-proxy
         ports:
         - "${APPPort}:80"
         volumes:
         - /var/run/docker.sock:/tmp/docker.sock:ro
         depends_on:
+            - gutenberg
+        networks:
             - gutenberg
 
 
