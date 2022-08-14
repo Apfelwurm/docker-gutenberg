@@ -5,6 +5,7 @@ services:
         env_file: .env
         ports:
         - "${APPPort}:80"
+        - "${CUPSPort}:631"
         environment:
             DB_HDJANGO_SETTINGS_MODULEOST: '${DB_HDJANGO_SETTINGS_MODULEOST}'
             POSTGRES_SERVER: '${DBServer}'
