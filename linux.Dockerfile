@@ -46,7 +46,7 @@ COPY --chown=gutenberg:gutenberg /dist/linux/ll-tests /app/ll-tests
 COPY --chown=gutenberg:gutenberg /dist/gutenberg/runscript.sh /app/gutenberg/runscript.sh
 COPY --chown=gutenberg:gutenberg /dist/gutenberg/gutenberg.ini /app/gutenberg/gutenberg.ini
 COPY /dist/linux/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY /dist/linux/cups/cupsd.conf /etc/cups/cupsd.conf
+COPY /dist/linux/cups/* /defaultconfig/cups/
 COPY /dist/linux/nginx/nginx.conf /etc/nginx/sites-enabled/default
 RUN chmod +x /app/ll-tests/*.sh; chmod +x /app/gutenberg/runscript.sh;
 

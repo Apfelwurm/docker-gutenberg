@@ -26,6 +26,7 @@ services:
         volumes:
             - gutenberg_storage_prints:/prints
             - gutenberg_storage_setup:/setup
+            - gutenberg_storage_cups:/etc/cups
         # ports:
         #     - "${APPPort}:8081"
         depends_on:
@@ -65,6 +66,8 @@ volumes:
   gutenberg_storage_prints:
         driver: local
   gutenberg_storage_setup:
+        driver: local
+  gutenberg_storage_cups:
         driver: local
   gutenberg_cache:
         driver: local
