@@ -34,11 +34,12 @@ LABEL com.lacledeslan.build-node=$BUILDNODE `
 
 
 RUN apt-get update && apt-get install -y `
-    supervisor cups printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds imagemagick libmagic-dev  unoconv ghostscript bubblewrap pdftk python3 python3-pip python3-venv uwsgi-plugin-python3 libpq-dev nginx &&`
+    net-tools supervisor cups printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds imagemagick libmagic-dev  unoconv ghostscript bubblewrap pdftk python3 python3-pip python3-venv uwsgi-plugin-python3 libpq-dev nginx &&`
     apt-get clean &&`
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
 RUN useradd --user-group --system --create-home --no-log-init gutenberg
+RUN useradd --user-group --system --create-home --no-log-init lpadmin
 
 COPY --chown=gutenberg:gutenberg --from=builder /dl/gutenberg /app/gutenberg
 
@@ -46,6 +47,7 @@ COPY --chown=gutenberg:gutenberg /dist/linux/ll-tests /app/ll-tests
 COPY --chown=gutenberg:gutenberg /dist/gutenberg/runscript.sh /app/gutenberg/runscript.sh
 COPY --chown=gutenberg:gutenberg /dist/gutenberg/gutenberg.ini /app/gutenberg/gutenberg.ini
 COPY /dist/linux/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY /dist/linux/cups/cupsd.conf /etc/cups/cupsd.conf
 COPY /dist/linux/nginx/nginx.conf /etc/nginx/sites-enabled/default
 RUN chmod +x /app/ll-tests/*.sh; chmod +x /app/gutenberg/runscript.sh;
 

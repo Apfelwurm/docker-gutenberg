@@ -1,5 +1,10 @@
 #!/bin/bash -i
 
+
+if ! [ -z "${CUPS_PASSWORD}" ]; then
+  echo "lpadmin:${CUPS_PASSWORD}" | chpasswd
+fi
+
 sed -i "s|%%POSTGRES_SERVER%%|$POSTGRES_SERVER|g" /app/gutenberg/gutenberg/settings/production_settings.py
 sed -i "s|%%POSTGRES_PASSWORD%%|$POSTGRES_PASSWORD|g" /app/gutenberg/gutenberg/settings/production_settings.py
 sed -i "s|%%POSTGRES_USER%%|$POSTGRES_USER|g" /app/gutenberg/gutenberg/settings/production_settings.py

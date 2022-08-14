@@ -16,6 +16,7 @@ services:
             REDIS_PORT: '${REDISPort}'
             REDIS_SERVER: '${REDISServer}'
             REDIS_PASSWORD: '${REDISPassword}'
+            CUPS_PASSWORD: '${CUPSPassword}'
             GUTENBERG_SECRETKEY: '${GUTENBERGSecretKey}'
             SERVER_VHOST: '${SERVERVhost}'
             WAIT_HOSTS: 'gutenberg_psql:5432'
