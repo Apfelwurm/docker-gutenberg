@@ -1,8 +1,16 @@
 #!/bin/bash -i
 
-
-if ! [ -z "${CUPS_PASSWORD}" ]; then
-  echo "lpadmin:${CUPS_PASSWORD}" | chpasswd
+if id "print" &>/dev/null; then
+    echo 'user already found'
+else
+    echo 'user not found, creating'
+    useradd \
+    --groups=lp,lpadmin \
+    --create-home \
+    --home-dir=/home/print \
+    --shell=/bin/bash \
+    --password=$(mkpasswd "$CUPS_PASSWORD") \
+    print
 fi
 
 sed -i "s|%%POSTGRES_SERVER%%|$POSTGRES_SERVER|g" /app/gutenberg/gutenberg/settings/production_settings.py
