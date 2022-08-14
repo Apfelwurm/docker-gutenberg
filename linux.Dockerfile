@@ -39,7 +39,6 @@ RUN apt-get update && apt-get install -y `
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
 RUN useradd --user-group --system --create-home --no-log-init gutenberg
-RUN useradd --user-group --system --create-home --no-log-init lpadmin
 
 COPY --chown=gutenberg:gutenberg --from=builder /dl/gutenberg /app/gutenberg
 
