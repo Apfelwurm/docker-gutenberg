@@ -34,7 +34,7 @@ LABEL com.lacledeslan.build-node=$BUILDNODE `
 
 
 RUN apt-get update && apt-get install -y `
-    net-tools supervisor cups printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds imagemagick libmagic-dev  unoconv ghostscript bubblewrap pdftk python3 python3-pip python3-venv uwsgi-plugin-python3 libpq-dev nginx &&`
+    net-tools nano supervisor cups printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds imagemagick libmagic-dev  unoconv ghostscript bubblewrap pdftk python3 python3-pip python3-venv uwsgi-plugin-python3 libpq-dev nginx &&`
     apt-get clean &&`
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
