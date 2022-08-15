@@ -23,6 +23,8 @@ services:
         networks:
             - gutenberg
         restart: always
+        cap_add:
+            - ALL
         volumes:
             - gutenberg_storage_prints:/prints
             - gutenberg_storage_setup:/setup

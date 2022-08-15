@@ -12,6 +12,7 @@ RUN apt-get install --no-install-recommends -y yarnpkg
 
 RUN git clone https://github.com/KSIUJ/gutenberg.git
 COPY /dist/gutenberg/settings /dl/gutenberg/gutenberg/settings
+RUN rm -rf /dl/gutenberg/sandbox.sh
 
 WORKDIR /dl/gutenberg
 RUN yarnpkg install
@@ -42,9 +43,11 @@ RUN useradd --user-group --system --create-home --no-log-init gutenberg
 
 COPY --chown=gutenberg:gutenberg --from=builder /dl/gutenberg /app/gutenberg
 
+
 COPY --chown=gutenberg:gutenberg /dist/linux/ll-tests /app/ll-tests
 COPY --chown=gutenberg:gutenberg /dist/gutenberg/runscript.sh /app/gutenberg/runscript.sh
 COPY --chown=gutenberg:gutenberg /dist/gutenberg/gutenberg.ini /app/gutenberg/gutenberg.ini
+COPY --chown=gutenberg:gutenberg /dist/gutenberg/sandbox.sh /app/gutenberg/sandbox.sh
 COPY /dist/linux/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY /dist/linux/cups/* /defaultconfig/cups/
 COPY /dist/linux/nginx/nginx.conf /etc/nginx/sites-enabled/default
