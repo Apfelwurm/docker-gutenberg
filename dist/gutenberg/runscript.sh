@@ -1,5 +1,18 @@
 #!/bin/bash -i
 
+if id "print" &>/dev/null; then
+    echo 'user already found'
+else
+    echo 'user not found, creating'
+    useradd \
+    --groups=lp,lpadmin \
+    --create-home \
+    --home-dir=/home/print \
+    --shell=/bin/bash \
+    --password=$(mkpasswd "$CUPS_PASSWORD") \
+    print
+fi
+
 sed -i "s|%%POSTGRES_SERVER%%|$POSTGRES_SERVER|g" /app/gutenberg/gutenberg/settings/production_settings.py
 sed -i "s|%%POSTGRES_PASSWORD%%|$POSTGRES_PASSWORD|g" /app/gutenberg/gutenberg/settings/production_settings.py
 sed -i "s|%%POSTGRES_USER%%|$POSTGRES_USER|g" /app/gutenberg/gutenberg/settings/production_settings.py
@@ -25,6 +38,12 @@ then
     touch /setup/initialfinished
 else
     echo "File found"
+fi
+
+
+if [ ! -f /etc/cups/cupsd.conf ]
+then
+    cp -rf /defaultconfig/cups/* /etc/cups/
 fi
 
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

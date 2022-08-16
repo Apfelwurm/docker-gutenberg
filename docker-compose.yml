@@ -5,6 +5,7 @@ services:
         env_file: .env
         ports:
         - "${APPPort}:80"
+        - "${CUPSPort}:631"
         environment:
             DB_HDJANGO_SETTINGS_MODULEOST: '${DB_HDJANGO_SETTINGS_MODULEOST}'
             POSTGRES_SERVER: '${DBServer}'
@@ -15,15 +16,19 @@ services:
             REDIS_PORT: '${REDISPort}'
             REDIS_SERVER: '${REDISServer}'
             REDIS_PASSWORD: '${REDISPassword}'
+            CUPS_PASSWORD: '${CUPSPassword}'
             GUTENBERG_SECRETKEY: '${GUTENBERGSecretKey}'
             SERVER_VHOST: '${SERVERVhost}'
             WAIT_HOSTS: 'gutenberg_psql:5432'
         networks:
             - gutenberg
         restart: always
+        cap_add:
+            - ALL
         volumes:
             - gutenberg_storage_prints:/prints
             - gutenberg_storage_setup:/setup
+            - gutenberg_storage_cups:/etc/cups
         # ports:
         #     - "${APPPort}:8081"
         depends_on:
@@ -63,6 +68,8 @@ volumes:
   gutenberg_storage_prints:
         driver: local
   gutenberg_storage_setup:
+        driver: local
+  gutenberg_storage_cups:
         driver: local
   gutenberg_cache:
         driver: local
