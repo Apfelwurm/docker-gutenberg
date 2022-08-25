@@ -28,8 +28,5 @@ docker run -it --rm --net=host apfelwurm/docker-gutenberg
 
 ### todo
 
-* python3 manage.py createsuperuser
 * implement tests
-* docker-compose
-* celery worker
-* compose redis
+* isolate driver installation and implement a logic for that
