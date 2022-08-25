@@ -30,3 +30,6 @@ docker run -it --rm --net=host apfelwurm/docker-gutenberg
 
 * implement tests
 * isolate driver installation and implement a logic for that
+* test nessecary docker caps for a working environment
+* check if somehow the sandbox could be used again
+* try to fix cups-browsed features
