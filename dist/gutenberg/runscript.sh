@@ -9,8 +9,8 @@ else
     --create-home \
     --home-dir=/home/print \
     --shell=/bin/bash \
-    --password=$(mkpasswd "$CUPS_PASSWORD") \
-    print
+    print && \
+    echo "print:$(echo "$CUPS_PASSWORD" | openssl passwd -6 -stdin)" | chpasswd -e
 fi
 
 sed -i "s|%%POSTGRES_SERVER%%|$POSTGRES_SERVER|g" /app/gutenberg/gutenberg/settings/production_settings.py
@@ -33,8 +33,8 @@ if [ ! -f /setup/initialfinished ]
 then
     export DJANGO_SUPERUSER_USERNAME=admin
     export DJANGO_SUPERUSER_PASSWORD=admin
-    su gutenberg -c '/app/gutenberg/gutenberg/venv/bin/python3 manage.py migrate'
-    su gutenberg -c '/app/gutenberg/gutenberg/venv/bin/python3 manage.py createsuperuser --email admin@admin.com --noinput'
+    su gutenberg -c 'cd /app/gutenberg && PATH="/home/gutenberg/.local/bin:$PATH" /home/gutenberg/.local/bin/uv run python manage.py migrate'
+    su gutenberg -c 'cd /app/gutenberg && PATH="/home/gutenberg/.local/bin:$PATH" /home/gutenberg/.local/bin/uv run python manage.py createsuperuser --email admin@admin.com --noinput'
     touch /setup/initialfinished
 else
     echo "File found"

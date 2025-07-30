@@ -19,7 +19,7 @@ RUN yarnpkg install
 RUN yarnpkg build
 
 
-FROM debian:11
+FROM debian:12
 HEALTHCHECK NONE
 ARG BUILDNODE=unspecified
 ARG SOURCE_COMMIT=unspecified
@@ -35,7 +35,7 @@ LABEL com.lacledeslan.build-node=$BUILDNODE `
 
 
 RUN apt-get update && apt-get install -y `
-    net-tools nano supervisor cups printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds hplip imagemagick libmagic-dev  unoconv ghostscript bubblewrap pdftk python3 python3-pip python3-venv uwsgi-plugin-python3 libpq-dev nginx &&`
+    net-tools curl nano supervisor cups printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds hplip imagemagick libmagic-dev  unoconv ghostscript bubblewrap pdftk python3 python3-pip python3-dev libpq-dev nginx &&`
     apt-get clean &&`
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
@@ -56,30 +56,21 @@ RUN chmod +x /app/ll-tests/*.sh; chmod +x /app/gutenberg/runscript.sh;
 
 WORKDIR /prints
 WORKDIR /var/log/gutenberg
-# WORKDIR /var/log/nginx
-# WORKDIR /var/lib/nginx
-# WORKDIR /var/lib/nginx/body
-# WORKDIR /var/lib/nginx/fastcgi
-# WORKDIR /var/lib/nginx/proxy
-# WORKDIR /var/lib/nginx/uwsgi
-# WORKDIR /var/lib/nginx/scgi
+
 
 RUN chown -R gutenberg:gutenberg /prints
 RUN chown -R gutenberg:gutenberg /var/log/gutenberg
-# RUN chown -R gutenberg:gutenberg /var/log/nginx
+RUN mkdir -p /app/gutenberg/static && chown -R gutenberg:gutenberg /app/gutenberg/static
 
-USER gutenberg
-RUN python3 -m venv /app/gutenberg/gutenberg/venv
 USER root
-RUN chmod +x /app/gutenberg/gutenberg/venv/bin/*
 WORKDIR /app/gutenberg/
 USER gutenberg
-RUN /app/gutenberg/gutenberg/venv/bin/pip3 install -r requirements.txt
-RUN /app/gutenberg/gutenberg/venv/bin/pip3 install psycopg2
-
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+RUN PATH="/home/gutenberg/.local/bin:$PATH" uv sync
+RUN PATH="/home/gutenberg/.local/bin:$PATH" uv pip install psycopg2 uwsgi
+RUN PATH="/home/gutenberg/.local/bin:$PATH" /home/gutenberg/.local/bin/uv run python manage.py collectstatic --noinput
+ENV PATH="/home/gutenberg/.local/bin:$PATH"
 USER root
-RUN ln -s /app/gutenberg/dist /app/gutenberg/static
-RUN ln -s /app/gutenberg/gutenberg/venv/lib/python3.9/site-packages/django/contrib/admin/static/admin /app/gutenberg/dist/admin
 
 WORKDIR /app
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /app/wait

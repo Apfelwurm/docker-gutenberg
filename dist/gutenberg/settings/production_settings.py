@@ -5,7 +5,10 @@ SECRET_KEY = '%%GUTENBERG_SECRETKEY%%'
 
 ALLOWED_HOSTS = []
 
-# STATIC_ROOT = '/var/www/gutenberg/static'
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.1/howto/static-files/
+STATIC_URL = '/static/'
+STATIC_ROOT = '/app/gutenberg/static/'
 
 # Admin e-mail addresses to send messages to when errors occur
 ADMINS = []
