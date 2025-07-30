@@ -2,9 +2,9 @@ name: linux/amd64
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
   repository_dispatch: # Allows action to be triggered via webhook
 
@@ -21,13 +21,23 @@ jobs:
           submodules: recursive
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.0.0
+      - name: Set Docker tag
+        id: set-tag
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            echo "tag=beta" >> $GITHUB_OUTPUT
+          else
+            echo "tag=pr-${{ github.event.number }}" >> $GITHUB_OUTPUT
+          fi
       - name: Build Linux Image
         uses: docker/build-push-action@v5.3.0
         with:
           context: .
           file: ./linux.Dockerfile
           tags: |
-            apfelwurm/docker-gutenberg:latest
+            apfelwurm/docker-gutenberg:${{ steps.set-tag.outputs.tag }}
           build-args: |
             BUILDNODE=GitHub (Run Number: ${{ github.run_number }} Run ID: ${{ github.run_id }})
             SOURCE_COMMIT=${{ github.sha }}
@@ -42,4 +52,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Push to Docker HUB
         if: ${{ github.event_name != 'pull_request' }}
-        run: docker push apfelwurm/docker-gutenberg:latest
+        run: docker push apfelwurm/docker-gutenberg:${{ steps.set-tag.outputs.tag }}
