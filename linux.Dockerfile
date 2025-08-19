@@ -1,6 +1,6 @@
 # escape=`
 
-FROM debian:11 AS builder
+FROM debian:13 AS builder
 WORKDIR /dl
 
 RUN apt-get update && apt-get install -y git curl gnupg2
@@ -19,7 +19,7 @@ RUN yarnpkg install
 RUN yarnpkg build
 
 
-FROM debian:11
+FROM debian:13
 HEALTHCHECK NONE
 ARG BUILDNODE=unspecified
 ARG SOURCE_COMMIT=unspecified
