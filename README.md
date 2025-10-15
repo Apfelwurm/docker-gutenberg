@@ -1,5 +1,8 @@
 # Gutenberg office printer gateway docker image
 
+This repository is not maintained anymore, because there is now an official Docker image for gutenberg, see the [Documentation](https://ksiuj.github.io/gutenberg/admin/docker.html).
+
+
 This repository is based on the work of [KSIUJ's ](https://github.com/KSIUJ) [Gutenberg](https://github.com/KSIUJ/gutenberg) .
 
 ## Linux Container
